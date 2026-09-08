@@ -1,0 +1,768 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --primary: #1687ff;
+    --primary-dark: #0969d6;
+    --blue-light: #eaf5ff;
+    --blue-soft: #dff1ff;
+    --background: #f4faff;
+    --card: rgba(255, 255, 255, 0.92);
+    --text: #18324a;
+    --muted: #7890a5;
+    --border: #dcecf8;
+    --danger: #ff5f6d;
+    --shadow: 0 18px 45px rgba(24, 120, 200, 0.12);
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+    font-family: "Inter", Arial, sans-serif;
+    color: var(--text);
+    background:
+        radial-gradient(
+            circle at 0% 0%,
+            rgba(80, 174, 255, 0.25),
+            transparent 32%
+        ),
+        radial-gradient(
+            circle at 100% 100%,
+            rgba(150, 220, 255, 0.3),
+            transparent 32%
+        ),
+        var(--background);
+    overflow-x: hidden;
+}
+
+/* =========================
+   BACKGROUND
+========================= */
+
+.background-shape {
+    position: fixed;
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.35;
+    z-index: -1;
+    animation: floatShape 8s ease-in-out infinite;
+}
+
+.shape-one {
+    background: #72c4ff;
+    top: -120px;
+    left: -100px;
+}
+
+.shape-two {
+    background: #b8e5ff;
+    right: -120px;
+    bottom: -100px;
+    animation-delay: -4s;
+}
+
+@keyframes floatShape {
+    0%, 100% {
+        transform: translate(0, 0);
+    }
+
+    50% {
+        transform: translate(20px, 25px);
+    }
+}
+
+/* =========================
+   CONTAINER
+========================= */
+
+.container {
+    width: min(92%, 900px);
+    margin: 0 auto;
+    padding: 45px 0 30px;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    animation: slideDown 0.6s ease;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo {
+    width: 58px;
+    height: 58px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 18px;
+
+    font-size: 28px;
+
+    background: linear-gradient(
+        135deg,
+        #1687ff,
+        #6ac8ff
+    );
+
+    box-shadow:
+        0 12px 28px rgba(22, 135, 255, 0.3);
+
+    animation: logoFloat 3s ease-in-out infinite;
+}
+
+.subtitle {
+    color: var(--primary);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    margin-bottom: 3px;
+}
+
+h1 {
+    font-size: 30px;
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+.note-counter {
+    min-width: 80px;
+    padding: 10px 14px;
+    text-align: center;
+
+    border-radius: 14px;
+
+    background: white;
+    border: 1px solid var(--border);
+
+    box-shadow:
+        0 8px 25px rgba(30, 120, 190, 0.1);
+
+    transition: 0.25s ease;
+}
+
+.note-counter:hover {
+    transform: translateY(-3px);
+    box-shadow:
+        0 12px 30px rgba(30, 120, 190, 0.16);
+}
+
+.note-counter span {
+    display: block;
+    color: var(--primary);
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.note-counter small {
+    color: var(--muted);
+    font-size: 11px;
+}
+
+/* =========================
+   FORM CARD
+========================= */
+
+.form-card {
+    padding: 28px;
+
+    border-radius: 24px;
+
+    background: var(--card);
+    border: 1px solid rgba(255, 255, 255, 0.9);
+
+    box-shadow: var(--shadow);
+
+    backdrop-filter: blur(15px);
+
+    margin-bottom: 42px;
+
+    animation: slideUp 0.7s ease;
+}
+
+.form-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+}
+
+.form-header h2 {
+    font-size: 20px;
+    margin-bottom: 5px;
+}
+
+.form-header p {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.form-icon {
+    width: 45px;
+    height: 45px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 14px;
+
+    background: var(--blue-light);
+
+    font-size: 21px;
+
+    transition: 0.3s ease;
+}
+
+.form-icon:hover {
+    transform: rotate(8deg) scale(1.08);
+}
+
+/* =========================
+   INPUT
+========================= */
+
+.input-group {
+    margin-bottom: 17px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+
+    font-size: 13px;
+    font-weight: 700;
+}
+
+input,
+textarea {
+    width: 100%;
+
+    border: 2px solid var(--border);
+    outline: none;
+
+    border-radius: 14px;
+
+    background: #fafdff;
+    color: var(--text);
+
+    font-family: inherit;
+    font-size: 14px;
+
+    transition: 0.25s ease;
+}
+
+input {
+    height: 50px;
+    padding: 0 15px;
+}
+
+textarea {
+    min-height: 130px;
+    padding: 14px 15px;
+    resize: vertical;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: #a6b9c9;
+}
+
+input:focus,
+textarea:focus {
+    border-color: #55b5ff;
+
+    background: white;
+
+    box-shadow:
+        0 0 0 4px rgba(22, 135, 255, 0.1);
+
+    transform: translateY(-1px);
+}
+
+/* =========================
+   SAVE BUTTON
+========================= */
+
+.save-button {
+    width: 100%;
+    min-height: 52px;
+
+    border: none;
+    border-radius: 14px;
+
+    background: linear-gradient(
+        135deg,
+        #1687ff,
+        #53bcff
+    );
+
+    color: white;
+
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 10px 22px rgba(22, 135, 255, 0.22);
+
+    transition: 0.25s ease;
+}
+
+.save-button span {
+    font-size: 20px;
+    vertical-align: -2px;
+    margin-right: 5px;
+}
+
+.save-button:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 15px 30px rgba(22, 135, 255, 0.3);
+}
+
+.save-button:active {
+    transform: scale(0.97);
+}
+
+/* =========================
+   LIST SECTION
+========================= */
+
+.list-section {
+    margin-bottom: 30px;
+}
+
+.section-header {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    margin-bottom: 18px;
+}
+
+.section-label {
+    color: var(--primary);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    margin-bottom: 4px;
+}
+
+.section-header h2 {
+    font-size: 22px;
+}
+
+.clear-button {
+    border: none;
+    background: transparent;
+    color: var(--danger);
+
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+
+    cursor: pointer;
+    padding: 8px;
+
+    transition: 0.2s ease;
+}
+
+.clear-button:hover {
+    text-decoration: underline;
+    transform: translateY(-1px);
+}
+
+/* =========================
+   NOTES GRID
+========================= */
+
+.notes-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 17px;
+}
+
+/* =========================
+   NOTE CARD
+========================= */
+
+.catatan {
+    position: relative;
+
+    padding: 21px;
+
+    border-radius: 19px;
+
+    background: white;
+    border: 1px solid var(--border);
+
+    box-shadow:
+        0 10px 30px rgba(40, 120, 180, 0.08);
+
+    animation: noteAppear 0.45s ease both;
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease;
+}
+
+.catatan:hover {
+    transform: translateY(-6px);
+
+    border-color: #b9ddf5;
+
+    box-shadow:
+        0 18px 38px rgba(30, 125, 195, 0.15);
+}
+
+.catatan::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 20px;
+
+    width: 38px;
+    height: 4px;
+
+    border-radius: 0 0 5px 5px;
+
+    background: linear-gradient(
+        90deg,
+        #1687ff,
+        #72cfff
+    );
+}
+
+.catatan h3 {
+    padding-top: 5px;
+    margin-bottom: 8px;
+
+    font-size: 16px;
+    line-height: 1.4;
+
+    word-break: break-word;
+}
+
+.catatan p {
+    color: #61798d;
+
+    font-size: 13px;
+    line-height: 1.7;
+
+    white-space: pre-wrap;
+    word-break: break-word;
+
+    margin-bottom: 17px;
+}
+
+.tanggal {
+    color: #9aaebd;
+    font-size: 10px;
+    margin-bottom: 10px;
+}
+
+/* =========================
+   ACTION BUTTONS
+========================= */
+
+.action-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 5px;
+}
+
+/* EDIT */
+
+.edit {
+    width: 100%;
+    padding: 9px;
+
+    border: none;
+    border-radius: 10px;
+
+    background: #eaf5ff;
+    color: #1687ff;
+
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.edit:hover {
+    background: #1687ff;
+    color: white;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 6px 14px rgba(22, 135, 255, 0.2);
+}
+
+.edit:active {
+    transform: scale(0.96);
+}
+
+/* HAPUS */
+
+.hapus {
+    width: 100%;
+    padding: 9px;
+
+    border: none;
+    border-radius: 10px;
+
+    background: #fff0f2;
+    color: var(--danger);
+
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.hapus:hover {
+    background: var(--danger);
+    color: white;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 6px 14px rgba(255, 95, 109, 0.2);
+}
+
+.hapus:active {
+    transform: scale(0.96);
+}
+
+.action-buttons .hapus {
+    margin-top: 0;
+}
+
+/* =========================
+   EMPTY STATE
+========================= */
+
+.empty-state {
+    padding: 45px 20px;
+
+    text-align: center;
+
+    border: 2px dashed #cfe6f7;
+    border-radius: 20px;
+
+    background: rgba(255, 255, 255, 0.65);
+
+    animation: fadeIn 0.5s ease;
+}
+
+.empty-icon {
+    width: 65px;
+    height: 65px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin: 0 auto 13px;
+
+    border-radius: 20px;
+
+    background: var(--blue-light);
+
+    font-size: 28px;
+
+    animation: logoFloat 3s ease-in-out infinite;
+}
+
+.empty-state h3 {
+    font-size: 16px;
+    margin-bottom: 6px;
+}
+
+.empty-state p {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+    text-align: center;
+
+    padding: 15px 0;
+
+    color: #9aafbf;
+    font-size: 10px;
+}
+
+footer span {
+    margin: 0 5px;
+}
+
+/* =========================
+   ANIMATIONS
+========================= */
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes noteAppear {
+    from {
+        opacity: 0;
+        transform: translateY(15px) scale(0.97);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes logoFloat {
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 650px) {
+
+    .container {
+        width: 92%;
+        padding-top: 25px;
+    }
+
+    .header {
+        margin-bottom: 22px;
+    }
+
+    .logo {
+        width: 50px;
+        height: 50px;
+        border-radius: 15px;
+        font-size: 24px;
+    }
+
+    h1 {
+        font-size: 25px;
+    }
+
+    .note-counter {
+        min-width: 65px;
+        padding: 8px 10px;
+    }
+
+    .form-card {
+        padding: 20px;
+        border-radius: 20px;
+    }
+
+    .notes-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .section-header {
+        align-items: center;
+    }
+
+    .clear-button {
+        font-size: 10px;
+    }
+}
+
+@media (max-width: 400px) {
+
+    .subtitle {
+        font-size: 9px;
+    }
+
+    h1 {
+        font-size: 22px;
+    }
+
+    .note-counter {
+        min-width: 58px;
+    }
+
+    .note-counter span {
+        font-size: 17px;
+    }
+
+    .form-header h2 {
+        font-size: 17px;
+    }
+}
