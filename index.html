@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Gudang — Inventaris Ruangan</title>
+<meta name="theme-color" content="#1B4640">
+<meta name="description" content="Aplikasi pencatatan dan pengelolaan inventaris barang per ruangan.">
+
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ===================== SPLASH SCREEN ===================== -->
+<div id="splash" class="splash">
+  <div class="splash-inner">
+    <div class="crate-logo" aria-hidden="true">
+      <div class="crate-lid"></div>
+      <div class="crate-body">
+        <span class="crate-seam"></span>
+        <span class="crate-strap"></span>
+      </div>
+    </div>
+    <h1 class="splash-title">GUDANG</h1>
+    <p class="splash-sub">Sistem Inventaris Ruangan</p>
+    <div class="splash-loader" role="status" aria-label="Memuat">
+      <span></span><span></span><span></span>
+    </div>
+    <p class="splash-maker">Dibuat oleh <strong id="makerName">Nama Siswa</strong></p>
+  </div>
+</div>
+
+<!-- ===================== APP SHELL ===================== -->
+<div id="app" class="app hidden">
+
+  <header class="topbar">
+    <div class="topbar-brand">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span class="brand-name">Gudang</span>
+    </div>
+    <button id="themeToggle" class="icon-btn" type="button" aria-label="Ganti mode gelap/terang" title="Mode gelap/terang">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36A5.4 5.4 0 0 1 12 3Z"/></svg>
+    </button>
+  </header>
+
+  <main class="views">
+
+    <!-- ---------- VIEW: BERANDA ---------- -->
+    <section id="view-home" class="view is-active" aria-labelledby="home-heading">
+      <h2 id="home-heading" class="view-title">Ringkasan Ruangan</h2>
+
+      <div class="stat-grid">
+        <div class="stat-card stat-total">
+          <span class="stat-label">Total Barang</span>
+          <span class="stat-value" id="statTotal">0</span>
+        </div>
+        <div class="stat-card stat-good">
+          <span class="stat-label">Kondisi Baik</span>
+          <span class="stat-value" id="statBaik">0</span>
+        </div>
+        <div class="stat-card stat-bad">
+          <span class="stat-label">Kondisi Rusak</span>
+          <span class="stat-value" id="statRusak">0</span>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h3>Sebaran per Ruangan</h3>
+        </div>
+        <div id="roomBreakdown" class="room-breakdown"></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h3>Data Terbaru</h3>
+          <button class="link-btn" data-goto="view-list" type="button">Lihat semua</button>
+        </div>
+        <div id="recentList" class="item-list"></div>
+      </div>
+    </section>
+
+    <!-- ---------- VIEW: TAMBAH ---------- -->
+    <section id="view-add" class="view" aria-labelledby="formTitle">
+      <h2 id="formTitle" class="view-title">Tambah Barang</h2>
+
+      <form id="itemForm" class="item-form" novalidate>
+        <input type="hidden" id="itemId" value="">
+
+        <label class="field">
+          <span class="field-label">Nama Barang</span>
+          <input type="text" id="namaBarang" placeholder="Contoh: Kursi Lipat" required>
+        </label>
+
+        <label class="field">
+          <span class="field-label">Kode Inventaris</span>
+          <input type="text" id="kodeInventaris" placeholder="Contoh: INV-0012" required>
+        </label>
+
+        <label class="field">
+          <span class="field-label">Nama Ruangan</span>
+          <select id="namaRuangan" required>
+            <option value="" disabled selected>Pilih ruangan</option>
+            <option value="Lab Komputer">Lab Komputer</option>
+            <option value="Ruang Kelas">Ruang Kelas</option>
+            <option value="Perpustakaan">Perpustakaan</option>
+            <option value="Ruang Guru">Ruang Guru</option>
+            <option value="__custom__">Ruangan lain…</option>
+          </select>
+        </label>
+
+        <label class="field" id="customRoomField" hidden>
+          <span class="field-label">Nama Ruangan Lain</span>
+          <input type="text" id="namaRuanganCustom" placeholder="Tulis nama ruangan">
+        </label>
+
+        <label class="field">
+          <span class="field-label">Jumlah Barang</span>
+          <input type="number" id="jumlahBarang" min="1" step="1" placeholder="1" required>
+        </label>
+
+        <fieldset class="field field-condition">
+          <legend class="field-label">Kondisi Barang</legend>
+          <div class="condition-options">
+            <label class="condition-chip chip-baik">
+              <input type="radio" name="kondisi" value="Baik" checked>
+              <span>Baik</span>
+            </label>
+            <label class="condition-chip chip-ringan">
+              <input type="radio" name="kondisi" value="Rusak Ringan">
+              <span>Rusak Ringan</span>
+            </label>
+            <label class="condition-chip chip-berat">
+              <input type="radio" name="kondisi" value="Rusak Berat">
+              <span>Rusak Berat</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <div class="form-actions">
+          <button type="button" id="cancelEdit" class="btn btn-ghost" hidden>Batal</button>
+          <button type="submit" class="btn btn-primary" id="submitBtn">Simpan Barang</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- ---------- VIEW: DAFTAR ---------- -->
+    <section id="view-list" class="view" aria-labelledby="list-heading">
+      <h2 id="list-heading" class="view-title">Daftar Inventaris</h2>
+
+      <div class="search-row">
+        <div class="search-box">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+          <input type="search" id="searchInput" placeholder="Cari nama atau kode barang…">
+        </div>
+        <button id="viewToggle" class="icon-btn" type="button" title="Ganti tampilan" aria-label="Ganti tampilan card/tabel">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        </button>
+      </div>
+
+      <div class="filter-row">
+        <select id="filterRoom" class="filter-select">
+          <option value="">Semua ruangan</option>
+        </select>
+        <select id="filterCondition" class="filter-select">
+          <option value="">Semua kondisi</option>
+          <option value="Baik">Baik</option>
+          <option value="Rusak Ringan">Rusak Ringan</option>
+          <option value="Rusak Berat">Rusak Berat</option>
+        </select>
+      </div>
+
+      <div id="listContainer" class="item-list list-view-card"></div>
+      <p id="emptyState" class="empty-state" hidden>Belum ada data inventaris yang cocok.</p>
+
+      <div class="data-tools">
+        <button id="exportBtn" class="btn btn-ghost btn-small" type="button">Ekspor Data (.json)</button>
+        <label class="btn btn-ghost btn-small file-btn">
+          Impor Data
+          <input type="file" id="importInput" accept="application/json" hidden>
+        </label>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="app-footer">
+    <p>Gudang — Sistem Inventaris Ruangan</p>
+    <p>Dibuat oleh <strong id="footerMaker">Nama Siswa</strong> &copy; <span id="footerYear"></span></p>
+  </footer>
+
+  <nav class="tabbar" aria-label="Navigasi utama">
+    <button class="tab-btn is-active" data-goto="view-home" type="button">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11 12 4l9 7"/><path d="M5 10v10h14V10"/></svg>
+      <span>Beranda</span>
+    </button>
+    <button class="tab-btn" data-goto="view-add" type="button">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+      <span>Tambah</span>
+    </button>
+    <button class="tab-btn" data-goto="view-list" type="button">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+      <span>Daftar</span>
+    </button>
+  </nav>
+</div>
+
+<!-- ===================== KONFIRMASI HAPUS ===================== -->
+<div id="confirmModal" class="modal-overlay" hidden>
+  <div class="modal-box" role="alertdialog" aria-modal="true" aria-labelledby="confirmTitle">
+    <p id="confirmTitle">Apakah Anda yakin ingin menghapus data ini?</p>
+    <p id="confirmDetail" class="modal-detail"></p>
+    <div class="modal-actions">
+      <button id="confirmCancel" class="btn btn-ghost" type="button">Batal</button>
+      <button id="confirmOk" class="btn btn-danger" type="button">Ya, Hapus</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="toast" hidden></div>
+
+<script src="script.js"></script>
+</body>
+</html>

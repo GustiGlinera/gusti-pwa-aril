@@ -1,0 +1,26 @@
+{
+  "name": "Gudang - Sistem Inventaris Ruangan",
+  "short_name": "Gudang",
+  "description": "Aplikasi pencatatan dan pengelolaan inventaris barang per ruangan (Lab Komputer, Ruang Kelas, Perpustakaan, Ruang Guru).",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#102B27",
+  "theme_color": "#1B4640",
+  "lang": "id",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
